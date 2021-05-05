@@ -35,10 +35,13 @@ class Board
 				end
 			end
 		end
-		if @tekazu % 2 == 1 then
-			@board[@a][@b] = 1
-		else
-			@board[@a][@b] = 2
+		if @board[@a][@b] == 0 then
+			if @tekazu % 2 == 1 then
+				@board[@a][@b] = 1
+			else
+				@board[@a][@b] = 2
+			end
+			@tekazu += 1
 		end
 	end
 

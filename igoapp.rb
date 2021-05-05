@@ -17,7 +17,6 @@ class Igo < Gosu::Window
 			x = mouse_x
 			y = mouse_y
 			@board.place(x,y)
-			@board.addTekazu
 		end
 	end
 
