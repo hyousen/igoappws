@@ -1,6 +1,11 @@
 ﻿require 'gosu'
 
 IMAGE_SIZE = 32
+OUTSIDE_BOARD = -1
+BLANK_POINT = 0
+BLACK_STONE = 1
+WHITE_STONE = 2
+
 
 class Board
 
@@ -17,7 +22,7 @@ class Board
 		@board.each_with_index{ |row,i|
 			row.each_with_index {|column,j|
 				if i == 0 || i == (TABLE_SIZE - 1) || j == 0 || j == (TABLE_SIZE - 1) then
-					@board[i][j] = -1
+					@board[i][j] = OUTSIDE_BOARD
 				end
 			}
 		}
@@ -37,18 +42,22 @@ class Board
 				end
 			end
 		end
-		if @board[@a][@b] == 0 then
-			if @tekazu % 2 == 1 then
-				@board[@a][@b] = 1
+		if @board[@a][@b] == BLANK_POINT then
+			if isBlack(@tekazu) then
+				@board[@a][@b] = BLACK_STONE
 			else
-				@board[@a][@b] = 2
+				@board[@a][@b] = WHITE_STONE
 			end
-			@tekazu += 1
+			addTekazu
 		end
 	end
 
 	def addTekazu
 		@tekazu += 1
+	end
+
+	def isBlack(tekazu)
+		tekazu % 2 == 1
 	end
 
 	def search(x,y,location)
