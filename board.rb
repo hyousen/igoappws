@@ -11,6 +11,7 @@ class Board
 
 	@@wsImage = Gosu::Image.new("whitestone.png")
 	@@bsImage = Gosu::Image.new("blackstone.png")
+	@@igoBoardImage = Gosu::Image.new("igo9roban.png")
 
 	def initialize
 		
@@ -72,6 +73,7 @@ class Board
 	end
 
 	def draw
+		@@igoBoardImage.draw(0,0,0)
 		@board.each_with_index{ |row,i|
 			row.each_with_index {|column,j|
 				if  column == 1 then

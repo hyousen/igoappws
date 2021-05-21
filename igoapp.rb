@@ -6,8 +6,6 @@ WIDTH_MARGIN = 0
 
 class Igo < Gosu::Window
 
-	@@igoBoardImage = Gosu::Image.new("igo9roban.png")
-
 	def initialize
 		super 480, 480
 		self.caption = "囲碁アプリ"
@@ -23,7 +21,6 @@ class Igo < Gosu::Window
 	end
 
 	def draw
-		@@igoBoardImage.draw(0,0,0)
 		@board.draw
 	end
 
