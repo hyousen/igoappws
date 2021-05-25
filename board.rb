@@ -80,6 +80,8 @@ class Board
 					@@bsImage.draw((i - 1) * 32 + WIDTH_MARGIN,(j - 1) * 32 + WIDTH_MARGIN,0)
 				elsif column == 2 then 
 					@@wsImage.draw((i - 1) * 32 + WIDTH_MARGIN,(j - 1) * 32 + WIDTH_MARGIN,0)
+				elsif column == 2 && search(i,j,"Top") == 1 && search(i,j,"Right") == 1 && search(i,j,"Bottom") == 1 && search(i,j,"Left") == 1 then
+ 					@@wsImage.reject!
 				else
 					
 				end
