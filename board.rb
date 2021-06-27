@@ -1,6 +1,11 @@
-﻿require 'gosu'
+﻿ require 'gosu'
 
 IMAGE_SIZE = 32
+OUTSIDE_BOARD = -1
+BLANK_POINT = 0
+BLACK_STONE = 1
+WHITE_STONE = 2
+
 
 class Board
 
@@ -8,17 +13,18 @@ class Board
 	@@bsImage = Gosu::Image.new("blackstone.png")
 	@@igoBoardImage = Gosu::Image.new("igoboard.png")
 	@@igoPlaneImage = Gosu::Image.new("igoplane.png")
+	@@igoBoardEdgeImage = Gosu::Image.new("igoboard_edge.png")
+	@@igoBoardCornerImage = Gosu::Image.new("igoboard_corner.png")
 
 	def initialize
 		
 		@board = Array.new(TABLE_SIZE){ Array.new(TABLE_SIZE,0)}
-		@board.each_with_index{ |row,i|
-			row.each_with_index {|column,j|
-				if i == 0 || i == (TABLE_SIZE - 1) || j == 0 || j == (TABLE_SIZE - 1) then
-					@board[i][j] = -1
-				end
-			}
-		}
+		TABLE_SIZE.times do |i|
+			@board[0][i] = OUTSIDE_BOARD
+			@board[TABLE_SIZE - 1][i] = OUTSIDE_BOARD
+			@board[i][0] = OUTSIDE_BOARD
+			@board[i][TABLE_SIZE - 1] = OUTSIDE_BOARD
+		end
 
 		@tekazu = 1
 
@@ -35,10 +41,16 @@ class Board
 				end
 			end
 		end
-		if @tekazu % 2 == 1 then
-			@board[@a][@b] = 1
-		else
-			@board[@a][@b] = 2
+
+		if @board[@a][@b] == BLANK_POINT then
+			if isBlack(@tekazu) then
+				@board[@a][@b] = BLACK_STONE
+			else
+				@board[@a][@b] = WHITE_STONE
+			end
+			
+			
+			addTekazu
 		end
 	end
 
@@ -46,11 +58,46 @@ class Board
 		@tekazu += 1
 	end
 
+	def isBlack(tekazu)
+		tekazu % 2 == 1
+	end
+
+	def search(x,y,location)
+		if @board[x][y] ==-1 then
+			result = nil
+		elsif location == "Top" then
+			result = @board[x][y-1]
+		elsif location == "Right"
+			result = @board[x+1][y]
+		elsif location == "Bottom"
+			result = @board[x][y+1]
+		elsif location == "Left"
+			result = @board[x-1][y]
+		end
+		return result
+	end
+
 	def draw
 		@board.each_with_index{ |row,i|
 			row.each_with_index {|column,j|
 				if column == -1 then
 					@@igoPlaneImage.draw(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0)
+				elsif column == 0 && search(i,j,"Top") == -1 && search(i,j,"Left") == -1 then
+					@@igoBoardCornerImage.draw(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0)
+				elsif column == 0 && search(i,j,"Top") == -1 && search(i,j,"Right") == -1 then
+					@@igoBoardCornerImage.draw_rot(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0,90.0,center_x = 0,cemter_y = 1)
+				elsif column == 0 && search(i,j,"Bottom") == -1 && search(i,j,"Right") == -1 then
+					@@igoBoardCornerImage.draw_rot(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0,180.0,center_x = 1,cemter_y = 1)
+				elsif column == 0 && search(i,j,"Bottom") == -1 && search(i,j,"Left") == -1 then
+					@@igoBoardCornerImage.draw_rot(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0,270.0,center_x = 1,cemter_y = 0)
+				elsif column == 0 && search(i,j,"Top") == -1 then
+					@@igoBoardEdgeImage.draw(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0)
+				elsif column == 0 && search(i,j,"Right") == -1 then
+					@@igoBoardEdgeImage.draw_rot(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0,90.0,center_x = 0,center_y = 1)
+				elsif column == 0 && search(i,j,"Bottom") == -1 then
+					@@igoBoardEdgeImage.draw_rot(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0,180.0,center_x = 1,center_y = 1)
+				elsif column == 0 && search(i,j,"Left") == -1 then
+					@@igoBoardEdgeImage.draw_rot(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0,270.0,center_x = 1,center_y = 0)
 				elsif column == 0 then
 					@@igoBoardImage.draw(i*32 + WIDTH_MARGIN,j*32 + WIDTH_MARGIN,0)
 				elsif column == 1 then
