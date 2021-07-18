@@ -1,6 +1,7 @@
 ﻿require 'gosu'
 require './domain/entity/game_config'
 require './domain/entity/board'
+require './service/drawer/board_drawer'
 
 class Igo < Gosu::Window
   def initialize
@@ -19,7 +20,8 @@ class Igo < Gosu::Window
   end
 
   def draw
-    @board.draw
+    board_drawer = BoardDrawer.new
+    board_drawer.draw(@board)
   end
 end
 
