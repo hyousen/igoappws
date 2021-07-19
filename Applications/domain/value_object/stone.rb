@@ -1,7 +1,7 @@
 # Moveクラスに集約?
 class Stone
-  FIRST_PLAYER = 'Black'
-  SECOND_PLAYER = 'White'
+  FIRST_PLAYER = 'Black'.freeze
+  SECOND_PLAYER = 'White'.freeze
 
   private
 
@@ -32,7 +32,4 @@ class Stone
   def white?
     @color == SECOND_PLAYER
   end
-
-
-
 end
