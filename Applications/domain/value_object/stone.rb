@@ -24,4 +24,15 @@ class Stone
   def ==(other)
     @color == other.color
   end
+
+  def black?
+    @color == FIRST_PLAYER
+  end
+
+  def white?
+    @color == SECOND_PLAYER
+  end
+
+
+
 end

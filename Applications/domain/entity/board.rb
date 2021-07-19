@@ -19,6 +19,7 @@ class Board
   end
 
   def apply_situation(move)
+    p move.stone
     board_position = move.position
     @stone_table[board_position.table_row][board_position.table_col] = move.stone
   end

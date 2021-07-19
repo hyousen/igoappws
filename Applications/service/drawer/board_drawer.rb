@@ -6,12 +6,15 @@ class BoardDrawer
     @igo_board_plane_image = Gosu::Image.new('../images/board/igoplane.png')
     @igo_board_edge_image = Gosu::Image.new('../images/board/igoboard_edge.png')
     @igo_board_corner_image = Gosu::Image.new('../images/board/igoboard_corner.png')
+
+    @bs_image = Gosu::Image.new('../images/board/blackstone.png')
+    @ws_image = Gosu::Image.new('../images/board/whitestone.png')
   end
 
   private
 
   def offset(int)
-    int * 32
+    int * BoardImageConfig::BOARD_IMAGE_SIZE
   end
 
   def draw_total_board(board)
@@ -33,7 +36,8 @@ class BoardDrawer
     # コーナーを描画する
     @igo_board_corner_image.draw(offset(1), offset(1), 0)
     @igo_board_corner_image.draw_rot(offset(board_size - 2), offset(1), 0, angle, center_x = 0, center_y = 1)
-    @igo_board_corner_image.draw_rot(offset(board_size - 2), offset(board_size - 2), 0, angle * 2, center_x = 1, center_y = 1)
+    @igo_board_corner_image.draw_rot(offset(board_size - 2), offset(board_size - 2), 0, angle * 2, center_x = 1,
+                                     center_y = 1)
     @igo_board_corner_image.draw_rot(offset(1), offset(board_size - 2), 0, angle * 3, center_x = 1, center_y = 0)
   end
 
@@ -53,16 +57,28 @@ class BoardDrawer
     board_size = board.size
     # 盤の外側を描画する
     board_size.times do |i|
-      @igo_board_plane_image.draw(offset(0), offset(i))
-      @igo_board_plane_image.draw(offset(i), offset(board_size - 1))
-      @igo_board_plane_image.draw(offset(board_size - 1), offset(i))
-      @igo_board_plane_image.draw(offset(i), offset(0))
+      @igo_board_plane_image.draw(offset(0), offset(i), 0)
+      @igo_board_plane_image.draw(offset(i), offset(board_size - 1), 0)
+      @igo_board_plane_image.draw(offset(board_size - 1), offset(i), 0)
+      @igo_board_plane_image.draw(offset(i), offset(0), 0)
     end
   end
 
   # boardの石を読み取り、配置するメソッド。
   # のちに中身を実装予定
-  def draw_stones(board); end
+  def draw_stones(board)
+    board_size = board.size
+    stones = board.stone_table
+    board_size.times do |row|
+      board_size.times do |col|
+        stone = stones[row][col]
+        next if stone.nil?
+
+        stone_image = stone.black? ? @bs_image : @ws_image
+        stone_image.draw(offset(row), offset(col), 0)
+      end
+    end
+  end
 
   public
 
