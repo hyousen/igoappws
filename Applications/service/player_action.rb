@@ -6,8 +6,17 @@ class PlayerAction
 
   def initialize; end
 
+  private 
+
+  def place?(board, board_position)
+    board.no_stone?(board_position) && \
+      !board.outside?(board_position)
+  end
+
+  public
+
   def place_stone(board, player, board_position)
-    return unless board.exist_stone?(board_position)
+    return unless place?(board, board_position)
 
     # ちなみに三項演算子は非推奨
     stone = player.order == 'First' ? Stone.black : Stone.white

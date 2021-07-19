@@ -6,20 +6,22 @@ class Board
   end
 
   # ここ辺はサービスに出した方が良さそう
-  def exist_stone?(board_position)
+  def no_stone?(board_position)
     @stone_table[board_position.table_row][board_position.table_col].nil?
+  end
+
+  def outside?(board_position)
+    board_position.table_row.zero? || board_position.table_row == (@board_size - 1) || \
+      board_position.table_col.zero? || board_position.table_col == (@board_size - 1)
   end
 
   def size
     @board_size
   end
 
-  def stone_table
-    @stone_table
-  end
+  attr_reader :stone_table
 
   def apply_situation(move)
-    p move.stone
     board_position = move.position
     @stone_table[board_position.table_row][board_position.table_col] = move.stone
   end
