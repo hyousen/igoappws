@@ -1,11 +1,11 @@
 ﻿require 'gosu'
-require './domain/entity/game_config'
-require './domain/entity/board'
-require './service/drawer/board_drawer'
-require './domain/entity/player'
-require './service/player_action'
-require './domain/value_object/board_position'
-require './domain/entity/game_record'
+require_relative './domain/entity/game_config'
+require_relative './domain/entity/board'
+require_relative './service/drawer/board_drawer'
+require_relative './domain/entity/player'
+require_relative './service/player_action'
+require_relative './domain/value_object/board_position'
+require_relative './domain/entity/game_record'
 
 class Igo < Gosu::Window
   def initialize

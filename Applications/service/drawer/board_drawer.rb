@@ -1,14 +1,16 @@
-require 'gosu'
+require "gosu"
+
 
 class BoardDrawer
   def initialize
-    @igo_board_image = Gosu::Image.new('../images/board/igoboard.png')
-    @igo_board_plane_image = Gosu::Image.new('../images/board/igoplane.png')
-    @igo_board_edge_image = Gosu::Image.new('../images/board/igoboard_edge.png')
-    @igo_board_corner_image = Gosu::Image.new('../images/board/igoboard_corner.png')
+    
+    @igo_board_image = Gosu::Image.new("#{__dir__}/../../../images/board/igoboard.png")
+    @igo_board_plane_image = Gosu::Image.new("#{__dir__}/../../../images/board/igoplane.png")
+    @igo_board_edge_image = Gosu::Image.new("#{__dir__}/../../../images/board/igoboard_edge.png")
+    @igo_board_corner_image = Gosu::Image.new("#{__dir__}/../../../images/board/igoboard_corner.png")
 
-    @bs_image = Gosu::Image.new('../images/board/blackstone.png')
-    @ws_image = Gosu::Image.new('../images/board/whitestone.png')
+    @bs_image = Gosu::Image.new("#{__dir__}/../../../images/board/blackstone.png")
+    @ws_image = Gosu::Image.new("#{__dir__}/../../../images/board/whitestone.png")
   end
 
   private
