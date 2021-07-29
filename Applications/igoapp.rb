@@ -6,16 +6,19 @@ require_relative './domain/entity/player'
 require_relative './service/player_action'
 require_relative './domain/value_object/board_position'
 require_relative './domain/entity/game_record'
+require_relative './domain/entity/sgf'
+
 
 class Igo < Gosu::Window
   def initialize
     super 480, 480
     self.caption = '囲碁アプリ'
-    @config = GameConfig.new(2, 0, 11, 500)
+    @config = GameConfig.new(2, 0, 9, 500)
     # @Todo configのプレイヤー人数による場合わけ
     @player1 = Player.first('human', 'プレイヤー1')
     @player2 = Player.second('human', 'プレイヤー2')
     @board = Board.new(@config.board_size)
+    @sgf = Sgf.new(@config, @player1, @player2)
   end
 
   def update

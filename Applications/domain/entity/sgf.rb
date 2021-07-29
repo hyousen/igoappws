@@ -1,12 +1,16 @@
+require_relative './game_config'
+require_relative './move'
+require_relative './player'
+require_relative '../../service/sgf_service/sgf_service'
 
-class SGF
+class Sgf
 
-    def initialize(player1 ,player2 ,config) 
-        board_size = config.formal_board_size
-        player1_name = player1.name
-        player2_name = player2.name
+    def initialize(config, player1, player2) 
+        @board_size = config.formal_board_size
+        @player1_name = player1.name
+        @player2_name = player2.name
 
-        sgf_initialize(board_size ,player1_name ,player2_name)
+        SgfService.new(@board_size, @player1_name, @player2_name)
 
     end
 
@@ -14,7 +18,7 @@ class SGF
         stone = move.stone
         position = move.position
 
-        sgf_edit(stone ,position)
+        sgf_edit(stone, position)
         
     end
     

@@ -7,5 +7,5 @@ class GameConfig
     @init_timer = init_timer
   end
 
-  attr_reader :player_number, :board_size
+  attr_reader :player_number, :board_size, :formal_board_size
 end
