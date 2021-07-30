@@ -30,7 +30,7 @@ class SgfFile
     end
 
     def encode_sgf(value)
-        value.to_s.tr("0-9a-p", "a-z")
+        value.to_s.tr("1-9a-p", "a-z")
     end
 
     def show_sgf_file
