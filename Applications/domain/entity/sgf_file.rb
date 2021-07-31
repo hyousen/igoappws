@@ -12,7 +12,9 @@ class SgfFile
         komi = config.komi
         player1_name = player1.name
         player2_name = player2.name
-
+        #　sgfファイルを初期化
+        #　はじまりは、(;で
+        #　GM[1]というのは「囲碁」をするという意味　
         @sgf_file = "(;GM[1]SZ[#{board_size}]KM[#{komi}]RU[JP]\n" 
         add_sgf_file("PB[#{player1_name}]\n")
         add_sgf_file("PW[#{player2_name}]\n")
@@ -26,11 +28,15 @@ class SgfFile
         player = stone.black? ? "B" : "W"
         point_x = encode_sgf(position.table_row)
         point_y = encode_sgf(position.table_col)
+        #　;が一手のはじまり
+        #　プレイヤーが黒番で打った場所が(4，4)なら、;B[dd]と記憶される
         add_sgf_file(";#{player}[#{point_x}#{point_y}]")
     end
 
     def encode_sgf(value)
-        value.to_s.tr("1-9a-p", "a-z")
+        #　ASCIIコードをもとに、1~19の整数値をa~zに変換
+        #　前回の方法ではうまくいってなかったので修正
+        (value + 96).chr
     end
 
     def show_sgf_file

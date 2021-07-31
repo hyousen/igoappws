@@ -15,6 +15,7 @@ class Sgf
         position = move.position
 
         @sgf.edit_sgf_file(stone, position)
+        # ここで作成したsgfファイルをコンソールに出力
         @sgf.show_sgf_file
     end
 end

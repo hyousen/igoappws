@@ -1,4 +1,5 @@
 class GameConfig
+  # コミ(白が後手なのでその分のハンデ)をついか
   def initialize(player_number, computer_number, formal_board_size, init_timer, komi)
     @player_number = player_number
     @computer_number = computer_number

@@ -13,7 +13,7 @@ class Igo < Gosu::Window
   def initialize
     super 480, 480
     self.caption = '囲碁アプリ'
-    @config = GameConfig.new(2, 0, 9, 500, 6.5)
+    @config = GameConfig.new(2, 0, 19, 500, 6.5)
     # @Todo configのプレイヤー人数による場合わけ
     @player1 = Player.first('human', 'プレイヤー1')
     @player2 = Player.second('human', 'プレイヤー2')
