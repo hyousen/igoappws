@@ -1,7 +1,8 @@
 require_relative '../domain/entity/game_record'
 require_relative '../domain/entity/move'
-require_relative '../domain/value_object/stone'
 require_relative '../domain/entity/sgf'
+require_relative '../domain/value_object/stone'
+
 
 class PlayerAction
 
@@ -16,7 +17,7 @@ class PlayerAction
 
   public
 
-  def place_stone(board, player, board_position, sgf)
+  def place_stone(board, player, board_position)
     return unless place?(board, board_position)
 
     # ちなみに三項演算子は非推奨
@@ -24,7 +25,6 @@ class PlayerAction
     move = Move.new(stone, board_position)
     board.apply_situation(move)
     GameRecord.record_move(move)
-    sgf.update(move)
   end
 
   # def pause()
