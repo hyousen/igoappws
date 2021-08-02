@@ -1,12 +1,14 @@
 require_relative './game_config'
+require_relative './game_record'
 require_relative './player'
+require_relative './move'
 require_relative '../value_object/board_position'
 
 class SgfFile
 
     def initialize(config, player1, player2)
         formal_board_size = config.formal_board_size
-        komi = config.komi
+        komi = GameRecord.komi
         player1_name = player1.name
         player2_name = player2.name
         #　sgfファイルを初期化
@@ -36,17 +38,18 @@ class SgfFile
         (value + 96).chr
     end
 
-    def self.set_record(moves)
-        stone = nil
-        position = nil
+    def set_record(moves)
         moves.each do |move|
-            stone = move.stone
-            position = move.position
-            edit_sgf_file(stone, position)
+            if move != nil
+                stone = move.stone
+                position = move.position
+                edit_sgf_file(stone, position)
+            end
         end
     end
 
     def show_sgf_file
         puts @sgf_file
     end
+
 end

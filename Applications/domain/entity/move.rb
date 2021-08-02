@@ -7,6 +7,10 @@ class Move
 
   attr_reader :stone
 
+  def stone
+    @stone
+  end
+
   def position
     @board_position
   end

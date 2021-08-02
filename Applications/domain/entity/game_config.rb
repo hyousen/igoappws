@@ -1,13 +1,12 @@
 class GameConfig
   # コミ(白が後手なのでその分のハンデ)をついか
-  def initialize(player_number, computer_number, formal_board_size, init_timer, komi)
+  def initialize(player_number, computer_number, formal_board_size, init_timer)
     @player_number = player_number
     @computer_number = computer_number
     @formal_board_size = formal_board_size
     @board_size = formal_board_size + 2
     @init_timer = init_timer
-    @komi = komi
   end
 
-  attr_reader :player_number, :board_size, :formal_board_size, :komi
+  attr_reader :player_number, :board_size, :formal_board_size
 end
