@@ -3,8 +3,9 @@ class GameRecord
   @@tekazu = 0
   @@moves = []
   @@removed = []
+  # komiはGameRecordに記述してみました
   @@komi = 6.5
-  
+
   def initialize; end
 
   # クラスメソッドの private は class << self private や private_class_method を使用するべき

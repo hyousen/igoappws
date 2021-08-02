@@ -15,8 +15,9 @@ class Igo < Gosu::Window
     self.caption = '囲碁アプリ'
     @config = GameConfig.new(2, 0, 19, 500)
     # @Todo configのプレイヤー人数による場合わけ
-    @player1 = Player.first('human', 'プレイヤー1')
-    @player2 = Player.second('human', 'プレイヤー2')
+    # プレイヤー1とかだと雰囲気出ないと思ってプレイヤー名に実名を入力ｗ
+    @player1 = Player.first('human', 'kshimogai')
+    @player2 = Player.second('human', 'hsakuchi')
     @board = Board.new(@config.board_size)
     @sgf = SgfFile.new(@config, @player1, @player2)
   end
@@ -29,6 +30,8 @@ class Igo < Gosu::Window
     next_tekazu = GameRecord.tekazu + 1
     now_player = next_tekazu.odd? ? @player1 : @player2
     player_action = PlayerAction.new
+    # とりあえずplayer_actionにSgfFileインスタンスを渡してます
+    # 何かいい改良等あれば言って下さい
     player_action.place_stone(@board, now_player, board_position, @sgf)
   end
 

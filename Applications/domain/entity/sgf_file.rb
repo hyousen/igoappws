@@ -40,6 +40,7 @@ class SgfFile
 
     def set_record(moves)
         moves.each do |move|
+            # ここもっといい書き方ある？
             if move != nil
                 stone = move.stone
                 position = move.position
