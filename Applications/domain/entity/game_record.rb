@@ -3,6 +3,8 @@ class GameRecord
   @@tekazu = 0
   @@moves = []
   @@removed = []
+  # komiはGameRecordに記述してみました
+  @@komi = 6.5
 
   def initialize; end
 
@@ -20,5 +22,13 @@ class GameRecord
 
   def self.tekazu
     @@tekazu
+  end
+
+  def self.moves
+    @@moves
+  end
+
+  def self.komi
+    @@komi
   end
 end

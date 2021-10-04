@@ -1,6 +1,9 @@
 require_relative '../domain/entity/game_record'
 require_relative '../domain/entity/move'
+require_relative '../domain/entity/sgf_file'
 require_relative '../domain/value_object/stone'
+require 'win32ole'
+
 
 class PlayerAction
 
@@ -15,9 +18,13 @@ class PlayerAction
 
   public
 
-  def place_stone(board, player, board_position)
+  def place_stone(board, player, board_position, sgf)
+    # とりあえず終了を実装するため臨時的にoutsideを押すと終了します
+    if board.outside?(board_position)
+      resign(sgf)
+    end
     return unless place?(board, board_position)
-
+    
     # ちなみに三項演算子は非推奨
     stone = player.order == 'First' ? Stone.black : Stone.white
     move = Move.new(stone, board_position)
@@ -28,6 +35,13 @@ class PlayerAction
   # def pause()
   # end
 
-  # def resign()
-  # end
+  def resign(sgf)
+      # windowsでしか動かないと思うので注意！
+      # とりあえずSgfFileクラスが実行できてるか試しています
+      wsh = WIN32OLE.new('WScript.Shell')
+      wsh.Popup("終局します")
+      sgf.set_record(GameRecord.moves)
+      sgf.show_sgf_file
+      exit
+  end
 end
