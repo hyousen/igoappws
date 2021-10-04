@@ -14,22 +14,18 @@ class SgfFile
         #　sgfファイルを初期化
         #　はじまりは、(;で
         #　GM[1]というのは「囲碁」をするという意味　
-        @sgf_file = "(;GM[1]SZ[#{formal_board_size}]KM[#{komi}]RU[JP]\n" 
-        add_sgf_file("PB[#{player1_name}]\n")
-        add_sgf_file("PW[#{player2_name}]\n")
+        @file_content = "(;GM[1]SZ[#{formal_board_size}]KM[#{komi}]RU[JP]\n" 
+        @file_content << "PB[#{player1_name}]\n"
+        @file_content << "PW[#{player2_name}]\n"
     end
 
-    def add_sgf_file(source)
-        @sgf_file = @sgf_file + source
-    end
-
-    def edit_sgf_file(stone, position)
+    def get_formatted_line(stone, position)
         color = stone.black? ? "B" : "W"
         table_row = encode_sgf(position.table_row)
         table_col = encode_sgf(position.table_col)
         #　;が一手のはじまり
         #　プレイヤーが黒番で打った場所が(4，4)なら、;B[dd]と記憶される
-        add_sgf_file(";#{color}[#{table_row}#{table_col}]")
+        ";#{color}[#{table_row}#{table_col}]"
     end
 
     def encode_sgf(value)
@@ -41,16 +37,19 @@ class SgfFile
     def set_record(moves)
         moves.each do |move|
             # ここもっといい書き方ある？
-            if move != nil
-                stone = move.stone
-                position = move.position
-                edit_sgf_file(stone, position)
-            end
+            # 変えました
+            next if move.nil?
+            
+            stone = move.stone
+            position = move.position
+            @file_content << get_formatted_line(stone, position)
         end
     end
 
     def show_sgf_file
-        puts @sgf_file
+        puts @file_content
     end
+
+    private :get_formatted_line, :encode_sgf 
 
 end
